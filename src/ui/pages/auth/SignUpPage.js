@@ -17,6 +17,7 @@ export class SignUpPage {
     this.passwordField = page.locator('[id="customer\\.password"]');
     this.confirmField = page.locator('#repeatedPassword');
     this.registerButton = page.getByRole('button', { name: 'Register' });
+    this.logOutLink = page.getByRole('link', { name: 'Log Out' });
   }
 
   async step(title, stepToRun) {
@@ -118,5 +119,45 @@ export class SignUpPage {
         await expect(successMessage).toBeVisible();
       },
     );
+  }
+
+  async submitSignUpForm(user) {
+    await this.fillFirstNameField(user.firstName);
+    await this.fillLastNameField(user.lastName);
+    await this.fillAddressField(user.address);
+    await this.fillCityField(user.city);
+    await this.fillStateField(user.state);
+    await this.fillZipCodeField(user.zipCode);
+    await this.fillPhoneField(user.phone);
+    await this.fillSsnField(user.ssn);
+    await this.fillUsernameField(user.username);
+    await this.fillPasswordField(user.password);
+    await this.fillConfirmField(user.password);
+  }
+
+  async registerUser(user) {
+    await this.submitSignUpForm(user);
+    await this.clickRegisterButton();
+  }
+
+  async verifyFieldError(fieldKey, expectedErrorText) {
+    await this.step(
+      `Verify error message for field '${fieldKey}'`,
+      async () => {
+        const elementId =
+          fieldKey === 'repeatedPassword'
+            ? `${fieldKey}.errors`
+            : `customer.${fieldKey}.errors`;
+
+        const errorLocator = this.page.locator(`[id="${elementId}"]`);
+        await expect(errorLocator).toHaveText(expectedErrorText);
+      },
+    );
+  }
+
+  async logout() {
+    await this.step('Click the "Log Out" link', async () => {
+      await this.logOutLink.click();
+    });
   }
 }
