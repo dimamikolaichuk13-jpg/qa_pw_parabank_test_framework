@@ -1,0 +1,122 @@
+import { testStep } from '../../../common/helpers/pwHelpers';
+import { expect } from '@playwright/test';
+
+export class SignUpPage {
+  constructor(page, userId = 0) {
+    this.page = page;
+    this.userId = userId;
+    this.firstNameField = page.locator('[id="customer\\.firstName"]');
+    this.lastNameField = page.locator('[id="customer\\.lastName"]');
+    this.addressField = page.locator('[id="customer\\.address\\.street"]');
+    this.cityField = page.locator('[id="customer\\.address\\.city"]');
+    this.stateField = page.locator('[id="customer\\.address\\.state"]');
+    this.zipCodeField = page.locator('[id="customer\\.address\\.zipCode"]');
+    this.phoneField = page.locator('[id="customer\\.phoneNumber"]');
+    this.ssnField = page.locator('[id="customer\\.ssn"]');
+    this.usernameField = page.locator('[id="customer\\.username"]');
+    this.passwordField = page.locator('[id="customer\\.password"]');
+    this.confirmField = page.locator('#repeatedPassword');
+    this.registerButton = page.getByRole('button', { name: 'Register' });
+  }
+
+  async step(title, stepToRun) {
+    return await testStep(title, stepToRun, this.userId);
+  }
+
+  async open() {
+    await this.step(`Open 'Sign Up' page`, async () => {
+      await this.page.goto(
+        'https://parabank.parasoft.com/parabank/register.htm',
+      );
+    });
+  }
+
+  async fillFirstNameField(name) {
+    await this.step('Fill the "First Name" field', async () => {
+      await this.firstNameField.fill(name);
+    });
+  }
+
+  async fillLastNameField(lastname) {
+    await this.step('Fill the "Last Name" field', async () => {
+      await this.lastNameField.fill(lastname);
+    });
+  }
+
+  async fillAddressField(address) {
+    await this.step('Fill the "Address" field', async () => {
+      await this.addressField.fill(address);
+    });
+  }
+
+  async fillCityField(city) {
+    await this.step('Fill the "City" field', async () => {
+      await this.cityField.fill(city);
+    });
+  }
+
+  async fillStateField(state) {
+    await this.step('Fill the "State" field', async () => {
+      await this.stateField.fill(state);
+    });
+  }
+
+  async fillZipCodeField(zipCode) {
+    await this.step('Fill the "Zip Code" field', async () => {
+      await this.zipCodeField.fill(zipCode);
+    });
+  }
+
+  async fillPhoneField(phone) {
+    await this.step('Fill the "Phone" field', async () => {
+      await this.phoneField.fill(phone);
+    });
+  }
+
+  async fillSsnField(ssn) {
+    await this.step('Fill the "SSN" field', async () => {
+      await this.ssnField.fill(ssn);
+    });
+  }
+
+  async fillUsernameField(username) {
+    await this.step('Fill the "Username" field', async () => {
+      await this.usernameField.fill(username);
+    });
+  }
+
+  async fillPasswordField(password) {
+    await this.step('Fill the "Password" field', async () => {
+      await this.passwordField.fill(password);
+    });
+  }
+
+  async fillConfirmField(confirmPassword) {
+    await this.step('Fill the "Confirm Password" field', async () => {
+      await this.confirmField.fill(confirmPassword);
+    });
+  }
+
+  async clickRegisterButton() {
+    await this.step('Click the “Register” button', async () => {
+      await this.registerButton.click();
+    });
+  }
+
+  async verifySuccessRegistration(username) {
+    await this.step(
+      'Verify success registration message is visible',
+      async () => {
+        const welcomeHeader = this.page.locator(
+          `h1.title:has-text("Welcome ${username}")`,
+        );
+        const successMessage = this.page.locator(
+          'text=Your account was created successfully.',
+        );
+
+        await expect(welcomeHeader).toBeVisible();
+        await expect(successMessage).toBeVisible();
+      },
+    );
+  }
+}
