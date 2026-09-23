@@ -13,9 +13,14 @@ test.beforeEach(async ({ page, user }) => {
   await signUpPage.logout();
 });
 
-test('Successful `Sign in` flow test', async ({ signInPage, user }) => {
+test('Successful `Sign in` flow test', async ({
+  signInPage,
+  accountsOverviewPage,
+  user,
+}) => {
   await signInPage.open();
   await signInPage.fillUsernameField(user.username);
   await signInPage.fillPasswordField(user.password);
   await signInPage.clickLogInButton();
+  await accountsOverviewPage.assertAccountsOverviewIsVisible();
 });

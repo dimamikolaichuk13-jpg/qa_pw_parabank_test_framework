@@ -11,7 +11,7 @@ import {
   EMPTY_PASSWORD_MESSAGE,
   EMPTY_CONFIRM_MESSAGE,
   DIFFERENT_PASSWORD_MESSAGE,
-} from '../../../src/ui/constants/authErrorMessages';
+} from '../../../src/ui/constants/signUpAuthErrorMessages';
 
 test.describe('Sign up negative tests', () => {
   const requiredFieldsTests = [
