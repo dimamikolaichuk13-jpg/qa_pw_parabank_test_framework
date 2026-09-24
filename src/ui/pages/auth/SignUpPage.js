@@ -1,5 +1,4 @@
-import { testStep } from '../../../common/helpers/pwHelpers';
-import { expect } from '@playwright/test';
+import { testStep, expect } from '../../../common/helpers/pwHelpers';
 
 export class SignUpPage {
   constructor(page, userId = 0) {
@@ -18,6 +17,14 @@ export class SignUpPage {
     this.confirmField = page.locator('#repeatedPassword');
     this.registerButton = page.getByRole('button', { name: 'Register' });
     this.logOutLink = page.getByRole('link', { name: 'Log Out' });
+    this.accountsOverviewLink = page.getByRole('link', {
+      name: 'Accounts Overview',
+    });
+    this.openNewAccountLink = page.getByRole('link', {
+      name: 'Open New Account',
+    });
+    this.transferFundsLink = page.getByRole('link', { name: 'Transfer Funds' });
+    this.billPayLink = page.getByRole('link', { name: 'Bill Pay' });
   }
 
   async step(title, stepToRun) {
@@ -155,9 +162,32 @@ export class SignUpPage {
     );
   }
 
-  async logout() {
+  async clickLogOut() {
     await this.step('Click the "Log Out" link', async () => {
       await this.logOutLink.click();
+    });
+  }
+  async clickAccountsOverviewLink() {
+    await this.step('Click the "Accounts Overview" link', async () => {
+      await this.accountsOverviewLink.click();
+    });
+  }
+
+  async clickOpenNewAccountLink() {
+    await this.step('Click the "Open New Account" link', async () => {
+      await this.openNewAccountLink.click();
+    });
+  }
+
+  async clickTransferFundsLink() {
+    await this.step('Click the "Transfer Funds" link', async () => {
+      await this.transferFundsLink.click();
+    });
+  }
+
+  async clickbillPayLink() {
+    await this.step('Click the "Bill Pay" link', async () => {
+      await this.billPayLink.click();
     });
   }
 }

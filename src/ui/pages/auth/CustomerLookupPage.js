@@ -1,5 +1,4 @@
-import { testStep } from '../../../common/helpers/pwHelpers';
-import { expect } from '../../../common/helpers/pwHelpers';
+import { testStep, expect } from '../../../common/helpers/pwHelpers';
 
 export class CustomerLookupPage {
   constructor(page, userId = 0) {
@@ -18,6 +17,8 @@ export class CustomerLookupPage {
     this.searchButton = page.getByRole('button', {
       name: 'Find My Login Info',
     });
+    this.succsessSearchMessage = page.getByText('Your login information was');
+    this.linkLogOut = page.getByRole('link', { name: 'Log Out' });
   }
 
   async step(title, stepToRun) {
@@ -33,9 +34,12 @@ export class CustomerLookupPage {
   }
 
   async assertcCustomerLookupIsVisible() {
-    await this.step('Checking the visibility of "Customer Lookup', async () => {
-      await expect(this.customerLookup).toBeVisible();
-    });
+    await this.step(
+      'Checking the visibility of "Customer Lookup"',
+      async () => {
+        await expect(this.customerLookup).toBeVisible();
+      },
+    );
   }
 
   async fillFirstNameField(name) {
@@ -84,5 +88,40 @@ export class CustomerLookupPage {
     await this.step('Click the "Find My Login Info" button', async () => {
       await this.searchButton.click();
     });
+  }
+
+  async assertSuccessSearchMessageIsVisible() {
+    await this.step(
+      'Checking the visibility of success search message',
+      async () => {
+        await expect(this.succsessSearchMessage).toBeVisible();
+      },
+    );
+  }
+
+  async assertUsernameIsVisible(username) {
+    await this.step(
+      `Checking the visibility of username: ${username}`,
+      async () => {
+        const usernameLocator = this.page.getByText(`Username: ${username}`);
+        await expect(usernameLocator).toBeVisible();
+      },
+    );
+  }
+
+  async assertPasswordIsVisible(password) {
+    await this.step('Checking the visibility of password', async () => {
+      const passwordLocator = this.page.getByText(`Password: ${password}`);
+      await expect(passwordLocator).toBeVisible();
+    });
+  }
+
+  async assertUserIsLoggedIn() {
+    await this.step(
+      'Checking that user is logged in (Log Out link is visible)',
+      async () => {
+        await expect(this.linkLogOut).toBeVisible();
+      },
+    );
   }
 }

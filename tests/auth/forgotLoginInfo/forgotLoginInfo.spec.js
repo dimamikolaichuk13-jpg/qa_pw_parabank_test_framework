@@ -30,4 +30,8 @@ test('Forgot login info test', async ({
   await customerLookupPage.fillZipCodeField(user.zipCode);
   await customerLookupPage.fillSsnField(user.ssn);
   await customerLookupPage.clickSearchButton();
+  await customerLookupPage.assertSuccessSearchMessageIsVisible();
+  await customerLookupPage.assertUsernameIsVisible(user.username);
+  await customerLookupPage.assertPasswordIsVisible(user.password);
+  await customerLookupPage.assertUserIsLoggedIn();
 });

@@ -1,5 +1,4 @@
-import { testStep } from '../../../common/helpers/pwHelpers';
-import { expect } from '../../../common/helpers/pwHelpers';
+import { testStep, expect } from '../../../common/helpers/pwHelpers';
 
 export class SignInPage {
   constructor(page, userId = 0) {
