@@ -10,7 +10,7 @@ test.beforeEach(async ({ page, user }) => {
   await signUpPage.open();
   await signUpPage.registerUser(client);
   await signUpPage.verifySuccessRegistration(user.username);
-  await signUpPage.logout();
+  await signUpPage.clickLogOut();
 });
 
 test('Successful `Sign in` flow test', async ({

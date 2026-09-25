@@ -22,6 +22,9 @@ export class BillPayPage {
     this.verifyAccountNumberField = page.locator('input[name="verifyAccount"]');
     this.amountField = page.locator('input[name="amount"]');
     this.sendPaymentButton = page.getByRole('button', { name: 'Send Payment' });
+    this.successfulBillPayment = page.getByRole('heading', {
+      name: 'Bill Payment Complete',
+    });
   }
 
   async step(title, stepToRun) {
@@ -30,9 +33,9 @@ export class BillPayPage {
 
   async assertPageTitleIsVisible() {
     await this.step(
-      'Checking the visibility of "Accounts Overview"',
+      'Checking the visibility of "Bill Payment Service"',
       async () => {
-        await expect(this.accountsOverview).toBeVisible();
+        await expect(this.pageTitle).toBeVisible();
       },
     );
   }
@@ -95,5 +98,31 @@ export class BillPayPage {
     await this.step('Click the "Send Payment" button', async () => {
       await this.sendPaymentButton.click();
     });
+  }
+
+  async assertSuccessfulBillPaymentIsVisible() {
+    await this.step(
+      'Checking the visibility of "Bill Payment Complete"',
+      async () => {
+        await expect(this.successfulBillPayment).toBeVisible();
+      },
+    );
+  }
+
+  async assertSuccessfulPaymentDetails(payeeName, amount) {
+    await this.step(
+      'Checking the success payment message and transaction details',
+      async () => {
+        await expect(
+          this.page.getByText(`Bill Payment to ${payeeName} in`),
+        ).toBeVisible();
+
+        await expect(this.page.getByText(payeeName)).toBeVisible();
+
+        await expect(this.page.getByText(`$${amount}`)).toBeVisible();
+
+        await expect(this.page.locator('#fromAccountId')).toBeVisible();
+      },
+    );
   }
 }

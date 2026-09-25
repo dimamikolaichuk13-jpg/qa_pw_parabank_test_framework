@@ -12,6 +12,19 @@ test.beforeEach(async ({ page, user }) => {
   await signUpPage.verifySuccessRegistration(user.username);
 });
 
-test('Open New Account', async ({ signUpPage }) => {
-  await signUpPage.clickOpenNewAccountLink();
-});
+const accountTypes = ['checking', 'savings'];
+
+for (const accountType of accountTypes) {
+  test(`Open New Account - ${accountType}`, async ({
+    signUpPage,
+    openNewAcountPage,
+  }) => {
+    await signUpPage.clickOpenNewAccountLink();
+    await openNewAcountPage.assertPageTitleIsVisible();
+
+    await openNewAcountPage.selectAccountType(accountType);
+    await openNewAcountPage.selectFromAccount();
+    await openNewAcountPage.clickOpenAccountButton();
+    await openNewAcountPage.assertSuccessfulAccountCreation();
+  });
+}

@@ -102,7 +102,7 @@ test.describe('Sign In Negative tests - Existing user with incorrect password', 
     await signUpPage.open();
     await signUpPage.registerUser(client);
     await signUpPage.verifySuccessRegistration(client.username);
-    await signUpPage.logout();
+    await signUpPage.clickLogOut();
   });
 
   test('Sign In with existing user and incorrect password', async ({

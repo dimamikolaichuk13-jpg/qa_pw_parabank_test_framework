@@ -14,5 +14,9 @@ test.beforeEach(async ({ page, user }) => {
 
 test('Account Overview', async ({ signUpPage, accountsOverviewPage }) => {
   await signUpPage.clickAccountsOverviewLink();
+
   await accountsOverviewPage.assertAccountsOverviewIsVisible();
+  await accountsOverviewPage.assertAccountColumnIsVisible();
+  await accountsOverviewPage.assertBalanceColumnIsVisible();
+  await accountsOverviewPage.assertAvailableAmountColumnIsVisible();
 });

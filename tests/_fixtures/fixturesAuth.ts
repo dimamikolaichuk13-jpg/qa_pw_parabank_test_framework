@@ -4,6 +4,9 @@ import { SignInPage } from '../../src/ui/pages/auth/SignInPage';
 import { AccountsOverviewPage } from '../../src/ui/pages/AccountsOverviewPage';
 import { CustomerLookupPage } from '../../src/ui/pages/auth/CustomerLookupPage';
 import { BillPayPage } from '../../src/ui/pages/BillPayPage';
+import { OpenNewAcountPage } from '../../src/ui/pages/OpenNewAcountPage';
+import { TransferFundsPage } from '../../src/ui/pages/TransferFundsPage';
+import { UpdateProfilePage } from '../../src/ui/pages/UpdateProfilePage';
 
 export const test = base.extend<{
   signUpPage: SignUpPage;
@@ -11,6 +14,9 @@ export const test = base.extend<{
   accountsOverviewPage: AccountsOverviewPage;
   customerLookupPage: CustomerLookupPage;
   billPayPage: BillPayPage;
+  openNewAcountPage: OpenNewAcountPage;
+  transferFundsPage: TransferFundsPage;
+  updateProfilePage: UpdateProfilePage;
 }>({
   signUpPage: async (
     { page }: { page: Page },
@@ -50,5 +56,29 @@ export const test = base.extend<{
   ) => {
     const billPayPage = new BillPayPage(page);
     await use(billPayPage);
+  },
+
+  openNewAcountPage: async (
+    { page }: { page: Page },
+    use: (r: OpenNewAcountPage) => Promise<void>,
+  ) => {
+    const openNewAcountPage = new OpenNewAcountPage(page);
+    await use(openNewAcountPage);
+  },
+
+  transferFundsPage: async (
+    { page }: { page: Page },
+    use: (r: TransferFundsPage) => Promise<void>,
+  ) => {
+    const transferFundsPage = new TransferFundsPage(page);
+    await use(transferFundsPage);
+  },
+
+  updateProfilePage: async (
+    { page }: { page: Page },
+    use: (r: UpdateProfilePage) => Promise<void>,
+  ) => {
+    const updateProfilePage = new UpdateProfilePage(page);
+    await use(updateProfilePage);
   },
 });

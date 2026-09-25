@@ -25,6 +25,9 @@ export class SignUpPage {
     });
     this.transferFundsLink = page.getByRole('link', { name: 'Transfer Funds' });
     this.billPayLink = page.getByRole('link', { name: 'Bill Pay' });
+    this.updateContactInfoLink = page.getByRole('link', {
+      name: 'Update Contact Info',
+    });
   }
 
   async step(title, stepToRun) {
@@ -188,6 +191,12 @@ export class SignUpPage {
   async clickbillPayLink() {
     await this.step('Click the "Bill Pay" link', async () => {
       await this.billPayLink.click();
+    });
+  }
+
+  async clickUpdateContactInfoLink() {
+    await this.step('Click the "Update Contact Info" link', async () => {
+      await this.updateContactInfoLink.click();
     });
   }
 }
